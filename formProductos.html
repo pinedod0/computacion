@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Ingreso - Hardware</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source src="video/bg_video_tunel.mp4" type="video/mp4">
+        Tu navegador no soporta videos HTML5.
+    </video>
+
+    <div class="panel-container">
+        <div class="panel-header">
+            <h2>DEO_INV::INGRESAR_NUEVO_PRODUCTO</h2>
+            <span class="status-indicator"></span>
+        </div>
+
+        <form id="hardware-form" action="inputProductos.php" method="post">
+            <div class="form-group">
+                <label for="nombre">>_ NOMBRE (Máx 30 char):</label>
+                <input type="text" id="nombre" name="fnombre" maxlength="30" placeholder="Ej: Tarjeta Gráfica RTX 4090" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion">>_ DESCRIPCIÓN (Máx 50 char):</label>
+                <input type="text" id="descripcion" name="fdescripcion" maxlength="50" placeholder="Ej: GPU NVIDIA 24GB VRAM" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="precio">>_ PRECIO (USD/EUR):</label>
+                <input type="number" id="precio" name="fprecio" placeholder="Ej: 1599" step="1">
+            </div>
+
+            <div class="form-group">
+                <label for="cantidad">>_ CANTIDAD_STOCK:</label>
+                <input type="number" id="cantidad" name="fcantidad" placeholder="Ej: 10" step="1">
+            </div>
+
+            <div id="console-output" class="console-output hidden"></div>
+
+            <button type="submit" class="btn-submit">[ INGRESAR ]</button>
+        </form>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

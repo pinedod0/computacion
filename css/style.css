@@ -1,0 +1,194 @@
+:root {
+    --bg-main: #0a0a0c;
+    --bg-panel: #111318;
+    --border-color: #2a2e38;
+    --text-main: #e2e8f0;
+    --accent-color: #00ffcc;
+    --error-color: #ff3366;
+    --font-mono: 'Courier New', Courier, monospace;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Ajuste del contenedor principal para mejorar la legibilidad sobre el video */
+.panel-container {
+    /* Asegura que el panel tenga un fondo oscuro semi-transparente */
+    background-color: rgba(17, 19, 24, 0.85); 
+    backdrop-filter: blur(5px); /* Añade un desenfoque al fondo (opcional) */
+    position: relative;
+    z-index: 1; /* Mantiene el panel por encima del video */
+    
+    /* Mantén aquí el resto de tus propiedades existentes para .panel-container */
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.05), inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+/* .panel-container {
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.05), inset 0 0 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+} */
+
+.panel-container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.panel-header h2 {
+    font-size: 1.1rem;
+    color: var(--accent-color);
+    margin: 0;
+    font-weight: normal;
+    letter-spacing: 1px;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent-color);
+    animation: blink 2s infinite;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #8b949e;
+    font-size: 0.9rem;
+}
+
+input {
+    width: 100%;
+    background-color: #050505;
+    border: 1px solid var(--border-color);
+    color: var(--accent-color);
+    padding: 12px;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 8px rgba(0, 255, 204, 0.2);
+}
+
+input::placeholder {
+    color: #30363d;
+}
+
+.btn-submit {
+    width: 100%;
+    background-color: transparent;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    padding: 15px;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s;
+}
+
+.btn-submit:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-main);
+    font-weight: bold;
+}
+
+.console-output {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #050505;
+    border-left: 3px solid var(--error-color);
+    color: var(--error-color);
+    font-size: 0.85rem;
+}
+
+.console-output.success {
+    border-left-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* Configuración del video de fondo */
+#bg-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1000; /* Lo envía al fondo absoluto */
+    object-fit: cover; /* Evita que el video se deforme */
+    opacity: 0.6; /* Opcional: Oscurece el video para que el texto resalte más */
+}
+
+
+/*lado php*/
+.terminal-output {
+            background-color: #050505;
+            border: 1px solid var(--border-color);
+            border-left: 3px solid var(--accent-color);
+            padding: 15px;
+            margin-bottom: 25px;
+            font-family: var(--font-mono);
+            color: #8b949e;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+.text-success { color: var(--accent-color); }
+.text-error { color: var(--error-color); }
+.btn-link {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
