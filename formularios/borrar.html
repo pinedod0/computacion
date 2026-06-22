@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrar Producto</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .btn-delete {
+            width: 100%;
+            background-color: transparent;
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+            padding: 15px;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.2s;
+        }
+        .btn-delete:hover {
+            background-color: var(--error-color);
+            color: var(--bg-main);
+            font-weight: bold;
+        }
+        .warning-text {
+            color: var(--error-color);
+            font-size: 0.8rem;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px dashed var(--error-color);
+            border-radius: 4px;
+            text-align: center;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source src="../video/bg_video_tunel.mp4" type="video/mp4">
+        Tu navegador no soporta videos HTML5.
+    </video>
+
+    <div class="panel-container">
+        <!-- ===================================================== -->
+        <!--  BARRA DE NAVEGACIÓN - COLOCAR AQUÍ EN TODAS LAS PÁGINAS -->
+        <!-- ===================================================== -->
+        <nav class="nav-bar">
+            <a href="../index.html" class="nav-brand">
+                <span>🏠</span> DEO_INV
+            </a>
+            <div class="nav-links">
+                <a href="registrar.html" class="nav-link">
+                    Registrar <span class="badge">INSERT</span>
+                </a>
+                <a href="consultar.html" class="nav-link">
+                    Consultar <span class="badge">SELECT</span>
+                </a>
+                <a href="actualizar.html" class="nav-link">
+                    Actualizar <span class="badge">UPDATE</span>
+                </a>
+                <a href="borrar.html" class="nav-link active">
+                    Borrar <span class="badge">DELETE</span>
+                </a>
+            </div>
+        </nav>
+        <!-- ===================================================== -->
+        <!--  FIN BARRA DE NAVEGACIÓN -->
+        <!-- ===================================================== -->
+        <div class="panel-header">
+            <h2>DEO_INV::BORRAR PRODUCTO</h2>
+            <span class="status-indicator"></span>
+        </div>
+
+        <form id="delete-form" action="../php/borrarProducto.php" method="post">
+            <div class="form-group">
+                <label for="codigo">>_ CÓDIGO DEL PRODUCTO A ELIMINAR:</label>
+                <input type="number" id="codigo" name="fcodigo" placeholder="Ej: 1" step="1" required>
+            </div>
+
+            <div class="warning-text">
+                ⚠️ Esta acción es irreversible. Se eliminará el producto de la base de datos.
+            </div>
+
+            <div id="console-output" class="console-output hidden"></div>
+            <button type="submit" class="btn-delete">[ BORRAR ]</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('delete-form');
+            const consoleOutput = document.getElementById('console-output');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                consoleOutput.className = 'console-output hidden';
+                consoleOutput.innerHTML = '';
+
+                const codigo = parseInt(document.getElementById('codigo').value);
+                let errores = [];
+
+                if (isNaN(codigo) || codigo <= 0) {
+                    errores.push("ERROR: El CÓDIGO debe ser un número positivo.");
+                }
+
+                if (errores.length > 0) {
+                    consoleOutput.innerHTML = errores.join('<br>');
+                    consoleOutput.classList.remove('hidden');
+                } else {
+                    // Confirmación adicional antes de borrar
+                    if (confirm(`¿Está seguro de eliminar el producto con código ${codigo}?`)) {
+                        consoleOutput.innerHTML = ">_ ELIMINACIÓN AUTORIZADA. Procesando...";
+                        consoleOutput.classList.remove('hidden');
+                        consoleOutput.classList.add('success');
+
+                        setTimeout(() => {
+                            form.submit();
+                        }, 500);
+                    } else {
+                        consoleOutput.innerHTML = ">_ OPERACIÓN CANCELADA.";
+                        consoleOutput.classList.remove('hidden');
+                        consoleOutput.classList.add('success');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

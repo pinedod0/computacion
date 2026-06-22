@@ -32,19 +32,9 @@ body {
     border-radius: 4px;
     padding: 30px;
     width: 100%;
-    max-width: 500px;
+    max-width: 800px;
     box-shadow: 0 0 20px rgba(0, 255, 204, 0.05), inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
-/* .panel-container {
-    background-color: var(--bg-panel);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    padding: 30px;
-    width: 100%;
-    max-width: 500px;
-    box-shadow: 0 0 20px rgba(0, 255, 204, 0.05), inset 0 0 10px rgba(0, 0, 0, 0.5);
-    position: relative;
-} */
 
 .panel-container::before {
     content: '';
@@ -114,6 +104,7 @@ input::placeholder {
     color: #30363d;
 }
 
+
 .btn-submit {
     width: 100%;
     background-color: transparent;
@@ -132,6 +123,34 @@ input::placeholder {
     color: var(--bg-main);
     font-weight: bold;
 }
+
+
+/* ===== ESTILOS PARA ENLACES QUE ACTÚAN COMO BOTONES ===== */
+.btn-link {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: transparent;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    padding: 15px;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s;
+    border-radius: 4px;
+}
+
+.btn-link:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-main);
+    font-weight: bold;
+}
+
+/*ESTILOS GENERALES*/
 
 .console-output {
     margin-top: 15px;
@@ -185,10 +204,122 @@ input::placeholder {
             line-height: 1.5;
         }
 .text-success { color: var(--accent-color); }
-.text-error { color: var(--error-color); }
-.btn-link {
+.text-error { color: var(--error-color);
             display: block;
             text-align: center;
             text-decoration: none;
             box-sizing: border-box;
         }
+
+        /* ===== ESTILOS PARA LA BARRA DE NAVEGACIÓN ===== */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(5, 5, 5, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 10px 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-bar .nav-brand {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar .nav-brand:hover {
+            text-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: #8b949e;
+            text-decoration: none;
+            padding: 6px 14px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+            font-family: var(--font-mono);
+        }
+
+        .nav-link:hover {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+            background-color: rgba(0, 255, 204, 0.05);
+        }
+
+        .nav-link.active {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+            background-color: rgba(0, 255, 204, 0.08);
+        }
+
+        .nav-link .badge {
+            font-size: 0.6rem;
+            background: rgba(0, 255, 204, 0.1);
+            padding: 1px 8px;
+            border-radius: 10px;
+            margin-left: 4px;
+            color: var(--accent-color);
+        }
+
+        .nav-link:hover .badge {
+            background: var(--accent-color);
+            color: var(--bg-main);
+        }
+
+        /* ===== ESTILOS PARA LA TABLA DE RESULTADOS ===== */
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 0.9rem;
+}
+
+.results-table thead th {
+    background-color: var(--accent-color);
+    color: var(--bg-main);
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: bold;
+    font-family: var(--font-mono);
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.results-table tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-family: var(--font-mono);
+}
+
+.results-table tbody tr:hover td {
+    background-color: rgba(0, 255, 204, 0.05);
+}
+
+.results-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.results-table .empty-row td {
+    text-align: center;
+    color: #5a6370;
+    padding: 30px 0;
+    font-style: italic;
+}

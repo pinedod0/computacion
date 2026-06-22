@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Producto</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .btn-update {
+            width: 100%;
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            padding: 15px;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.2s;
+        }
+        .btn-update:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-main);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source src="../video/bg_video_tunel.mp4" type="video/mp4">
+        Tu navegador no soporta videos HTML5.
+    </video>
+
+    <div class="panel-container">
+        <!-- ===================================================== -->
+        <!--  BARRA DE NAVEGACIÓN - COLOCAR AQUÍ EN TODAS LAS PÁGINAS -->
+        <!-- ===================================================== -->
+        <nav class="nav-bar">
+            <a href="../index.html" class="nav-brand">
+                <span>🏠</span> DEO_INV
+            </a>
+            <div class="nav-links">
+                <a href="registrar.html" class="nav-link">
+                    Registrar <span class="badge">INSERT</span>
+                </a>
+                <a href="consultar.html" class="nav-link">
+                    Consultar <span class="badge">SELECT</span>
+                </a>
+                <a href="actualizar.html" class="nav-link active">
+                    Actualizar <span class="badge">UPDATE</span>
+                </a>
+                <a href="borrar.html" class="nav-link">
+                    Borrar <span class="badge">DELETE</span>
+                </a>
+            </div>
+        </nav>
+        <!-- ===================================================== -->
+        <!--  FIN BARRA DE NAVEGACIÓN -->
+        <!-- ===================================================== -->
+        <div class="panel-header">
+            <h2>DEO_INV::ACTUALIZAR PRODUCTO</h2>
+            <span class="status-indicator"></span>
+        </div>
+
+        <form id="update-form" action="../php/actualizarProducto.php" method="post">
+            <div class="form-group">
+                <label for="codigo">>_ CÓDIGO DEL PRODUCTO:</label>
+                <input type="number" id="codigo" name="fcodigo" placeholder="Ej: 1" step="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="precio">>_ NUEVO PRECIO (USD/EUR):</label>
+                <input type="number" id="precio" name="fprecio" placeholder="Ej: 1599" step="any" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cantidad">>_ NUEVA CANTIDAD_STOCK:</label>
+                <input type="number" id="cantidad" name="fcantidad" placeholder="Ej: 10" step="1" required>
+            </div>
+
+            <div id="console-output" class="console-output hidden"></div>
+            <button type="submit" class="btn-update">[ ACTUALIZAR ]</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('update-form');
+            const consoleOutput = document.getElementById('console-output');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                consoleOutput.className = 'console-output hidden';
+                consoleOutput.innerHTML = '';
+
+                const codigo = parseInt(document.getElementById('codigo').value);
+                const precio = parseFloat(document.getElementById('precio').value);
+                const cantidad = parseInt(document.getElementById('cantidad').value);
+
+                let errores = [];
+
+                // Validar campos vacíos
+                if (isNaN(codigo) || codigo <= 0) {
+                    errores.push("ERROR: El CÓDIGO debe ser un número positivo.");
+                }
+                if (isNaN(precio)) {
+                    errores.push("ERROR: El PRECIO debe ser un número válido.");
+                }
+                if (isNaN(cantidad)) {
+                    errores.push("ERROR: La CANTIDAD debe ser un número válido.");
+                }
+
+                // Validar reglas de negocio numéricas
+                if (!isNaN(precio) && precio <= 0) {
+                    errores.push("ERROR_CRÍTICO: El PRECIO no puede ser 0 ni negativo.");
+                }
+                if (!isNaN(cantidad) && cantidad <= 0) {
+                    errores.push("ERROR_CRÍTICO: La CANTIDAD no puede ser 0 ni negativa.");
+                }
+
+                if (errores.length > 0) {
+                    consoleOutput.innerHTML = errores.join('<br>');
+                    consoleOutput.classList.remove('hidden');
+                } else {
+                    consoleOutput.innerHTML = ">_ DATOS_VÁLIDOS: Actualización autorizada.";
+                    consoleOutput.classList.remove('hidden');
+                    consoleOutput.classList.add('success');
+
+                    setTimeout(() => {
+                        form.submit();
+                    }, 500);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

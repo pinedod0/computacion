@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Ingreso - Hardware</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source src="../video/bg_video_tunel.mp4" type="video/mp4">
+        Tu navegador no soporta videos HTML5.
+    </video>
+
+    <div class="panel-container">
+        <!-- ===================================================== -->
+        <!--  BARRA DE NAVEGACIÓN - COLOCAR AQUÍ EN TODAS LAS PÁGINAS -->
+        <!-- ===================================================== -->   
+        <nav class="nav-bar">
+            <a href="../index.html" class="nav-brand">
+                <span>🏠</span> DEO_INV
+            </a>
+            <div class="nav-links">
+                <a href="registrar.html" class="nav-link active">
+                    Registrar <span class="badge">INSERT</span>
+                </a>
+                <a href="consultar.html" class="nav-link">
+                    Consultar <span class="badge">SELECT</span>
+                </a>
+                <a href="actualizar.html" class="nav-link">
+                    Actualizar <span class="badge">UPDATE</span>
+                </a>
+                <a href="borrar.html" class="nav-link">
+                    Borrar <span class="badge">DELETE</span>
+                </a>
+            </div>
+        </nav>
+        <!-- ===================================================== -->
+        <!--  FIN BARRA DE NAVEGACIÓN -->
+        <!-- ===================================================== -->
+        <div class="panel-header">
+            <h2>DEO_INV::REGISTRAR PRODUCTO</h2>
+            <span class="status-indicator"></span>
+        </div>
+
+        <form id="hardware-form" action="../php/registrarProducto.php" method="post">
+            <div class="form-group">
+                <label for="nombre">>_ NOMBRE (Máx 30 char):</label>
+                <input type="text" id="nombre" name="fnombre" maxlength="30" placeholder="Ej: Tarjeta Gráfica RTX 4090" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion">>_ DESCRIPCIÓN (Máx 50 char):</label>
+                <input type="text" id="descripcion" name="fdescripcion" maxlength="50" placeholder="Ej: GPU NVIDIA 24GB VRAM" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="precio">>_ PRECIO (USD/EUR):</label>
+                <input type="number" id="precio" name="fprecio" placeholder="Ej: 1599" step="any">
+            </div>
+
+            <div class="form-group">
+                <label for="cantidad">>_ CANTIDAD_STOCK:</label>
+                <input type="number" id="cantidad" name="fcantidad" placeholder="Ej: 10" step="1">
+            </div>
+
+            <div id="console-output" class="console-output hidden"></div>
+
+            <button type="submit" class="btn-submit">[ INGRESAR ]</button>
+        </form>
+    </div>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

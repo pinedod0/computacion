@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultado de Ingreso - Hardware</title>
-    <link rel="stylesheet" href="css/style.css"> 
+    <link rel="stylesheet" href="../css/style.css"> 
     
     <!-- <style>
         .terminal-output {
@@ -38,7 +38,8 @@
 
         <div class="terminal-output">
             <?php
-            include("connection.php");
+            /** @var mysqli $conexion */
+            include("../db/connection.php");
 
             //Recoger los datos del formulario
                 $nombre=$_REQUEST['fnombre'];

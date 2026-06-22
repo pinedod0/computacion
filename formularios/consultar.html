@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar Producto</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .panel-container {
+            max-width: 800px;
+        }
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        .results-table th {
+            background-color: var(--accent-color);
+            color: var(--bg-main);
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        .results-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+        .results-table tr:hover td {
+            background-color: rgba(0, 255, 204, 0.05);
+        }
+        .results-table .empty-row td {
+            text-align: center;
+            color: #5a6370;
+            padding: 30px 0;
+            font-style: italic;
+        }
+        .btn-consultar {
+            width: 100%;
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            padding: 15px;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.2s;
+        }
+        .btn-consultar:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-main);
+            font-weight: bold;
+        }
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        .result-card {
+            background-color: rgba(5, 5, 5, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .result-label {
+            color: #8b949e;
+            font-weight: bold;
+        }
+        .result-value {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        .result-value.error {
+            color: var(--error-color);
+        }
+    </style>
+</head>
+<body>
+
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source src="../video/bg_video_tunel.mp4" type="video/mp4">
+        Tu navegador no soporta videos HTML5.
+    </video>
+
+    <div class="panel-container">
+        <!-- ===================================================== -->
+        <!--  BARRA DE NAVEGACIÓN - COLOCAR AQUÍ EN TODAS LAS PÁGINAS -->
+        <!-- ===================================================== -->
+        <nav class="nav-bar">
+            <a href="../index.html" class="nav-brand">
+                <span>🏠</span> DEO_INV
+            </a>
+            <div class="nav-links">
+                <a href="registrar.html" class="nav-link">
+                    Registrar <span class="badge">INSERT</span>
+                </a>
+                <a href="consultar.html" class="nav-link active">
+                    Consultar <span class="badge">SELECT</span>
+                </a>
+                <a href="actualizar.html" class="nav-link">
+                    Actualizar <span class="badge">UPDATE</span>
+                </a>
+                <a href="borrar.html" class="nav-link">
+                    Borrar <span class="badge">DELETE</span>
+                </a>
+            </div>
+        </nav>
+        <!-- ===================================================== -->
+        <!--  FIN BARRA DE NAVEGACIÓN -->
+        <!-- ===================================================== -->
+        <div class="panel-header">
+            <h2>DEO_INV::CONSULTAR PRODUCTO</h2>
+            <span class="status-indicator"></span>
+        </div>
+
+        <form id="consulta-form" action="../php/consultarProducto.php" method="post">
+            <div class="form-group">
+                <label for="codigo">>_ CÓDIGO DEL PRODUCTO:</label>
+                <input type="number" id="codigo" name="fcodigo" placeholder="Ej: 1" step="1" required>
+            </div>
+
+            <div id="console-output" class="console-output hidden"></div>
+            <button type="submit" class="btn-consultar">[ CONSULTAR ]</button>
+        </form>
+
+        <div class="table-wrapper" id="resultados-wrapper">
+            <!-- Los resultados se mostrarán aquí después del envío -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('consulta-form');
+            const consoleOutput = document.getElementById('console-output');
+            const resultadosWrapper = document.getElementById('resultados-wrapper');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                consoleOutput.className = 'console-output hidden';
+                consoleOutput.innerHTML = '';
+
+                const codigo = parseInt(document.getElementById('codigo').value);
+                let errores = [];
+
+                // Validar que el código sea positivo
+                if (isNaN(codigo) || codigo <= 0) {
+                    errores.push("ERROR: El CÓDIGO debe ser un número positivo.");
+                }
+
+                if (errores.length > 0) {
+                    consoleOutput.innerHTML = errores.join('<br>');
+                    consoleOutput.classList.remove('hidden');
+                    return;
+                }
+
+                // Mostrar mensaje de consulta
+                consoleOutput.innerHTML = ">_ CONSULTANDO PRODUCTO...";
+                consoleOutput.classList.remove('hidden');
+                consoleOutput.classList.add('success');
+
+                // Enviar el formulario después de un breve delay
+                setTimeout(() => {
+                    form.submit();
+                }, 500);
+            });
+
+            // Si hay datos en la URL (después de la respuesta PHP), mostrarlos
+            const params = new URLSearchParams(window.location.search);
+            const datos = params.get('datos');
+            if (datos) {
+                try {
+                    const producto = JSON.parse(decodeURIComponent(datos));
+                    mostrarProducto(producto);
+                } catch (e) {
+                    console.error('Error al parsear datos:', e);
+                }
+            }
+
+            function mostrarProducto(producto) {
+                let html = '<div class="result-card">';
+
+                if (producto && producto.codigo) {
+                    html += `
+                        <div class="result-item">
+                            <span class="result-label">📋 CÓDIGO</span>
+                            <span class="result-value">${producto.codigo}</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">📝 DESCRIPCIÓN</span>
+                            <span class="result-value">${producto.descripcion || 'Sin descripción'}</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">💰 PRECIO</span>
+                            <span class="result-value">${producto.precio || '0'} €</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">📦 CANTIDAD</span>
+                            <span class="result-value">${producto.cantidad || '0'} unidades</span>
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <div class="result-item">
+                            <span class="result-label">⚠️ RESULTADO</span>
+                            <span class="result-value error">No se encontró el producto con el código proporcionado</span>
+                        </div>
+                    `;
+                }
+
+                html += '</div>';
+                resultadosWrapper.innerHTML = html;
+            }
+        });
+    </script>
+</body>
+</html>

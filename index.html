@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Informática · Panel Principal</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ===== ESTILOS ADICIONALES PARA EL INDEX ===== */
+        .panel-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        .btn-module {
+            display: block;
+            width: 100%;
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 1px solid var(--border-color);
+            padding: 18px 20px;
+            font-family: var(--font-mono);
+            font-size: 1.05rem;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: left;
+            transition: all 0.25s ease;
+            border-radius: 4px;
+            box-sizing: border-box;
+            position: relative;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-module::before {
+            content: '> ';
+            color: var(--accent-color);
+            opacity: 0.6;
+        }
+
+        .btn-module:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-main);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.15);
+            transform: translateX(6px);
+        }
+
+        .btn-module:hover::before {
+            color: var(--bg-main);
+            opacity: 1;
+        }
+
+        .btn-module .badge {
+            float: right;
+            font-size: 0.7rem;
+            background: rgba(0, 255, 204, 0.08);
+            padding: 2px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 204, 0.15);
+            color: #8b949e;
+            transition: inherit;
+        }
+
+        .btn-module:hover .badge {
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--bg-main);
+            border-color: var(--bg-main);
+        }
+
+        .panel-subtitle {
+            color: #5a6370;
+            font-size: 0.85rem;
+            margin-top: -6px;
+            margin-bottom: 18px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 14px;
+            letter-spacing: 0.3px;
+        }
+
+        .panel-subtitle span {
+            color: var(--accent-color);
+        }
+
+        /* Ajuste del header para el título principal */
+        .panel-header h2 {
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+        }
+
+        .panel-header h2 small {
+            display: block;
+            font-size: 0.6rem;
+            color: #5a6370;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            font-weight: normal;
+        }
+
+        .footer-index {
+            margin-top: 28px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--border-color);
+            text-align: center;
+            font-size: 0.75rem;
+            color: #3a404a;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-index a {
+            color: var(--accent-color);
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .footer-index a:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Video de fondo (mismo que en registro.html) -->
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source src="video/bg_video_tunel.mp4" type="video/mp4">
+        Tu navegador no soporta videos HTML5.
+    </video>
+
+    <div class="panel-container">
+        <div class="panel-header">
+            <h2>
+                🖥️ Tienda de informática
+                <small>Panel de control · Gestión de productos</small>
+            </h2>
+            <span class="status-indicator"></span>
+        </div>
+
+        <p class="panel-subtitle">
+            Seleccione una operación <span>▼</span>
+        </p>
+
+        <div class="panel-grid">
+            <!-- REGISTRO -->
+            <a href="formularios/registrar.html" class="btn-module">
+                Registrar producto
+                <span class="badge">INSERT</span>
+            </a>
+
+            <!-- CONSULTA -->
+            <a href="formularios/consultar.html" class="btn-module">
+                Consultar productos
+                <span class="badge">SELECT</span>
+            </a>
+
+            <!-- ACTUALIZAR -->
+            <a href="formularios/actualizar.html" class="btn-module">
+                Actualizar producto
+                <span class="badge">UPDATE</span>
+            </a>
+
+            <!-- BORRAR -->
+            <a href="formularios/borrar.html" class="btn-module">
+                Borrar producto
+                <span class="badge">DELETE</span>
+            </a>
+        </div>
+
+        <div class="footer-index">
+            <span>DEO_INV :: v1.0</span> &nbsp;·&nbsp;
+            <a href="#" onclick="window.location.reload(); return false;">⟳ recargar</a>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
